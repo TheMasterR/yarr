@@ -12,8 +12,7 @@ services:
       - PGID=1000
       - TZ=Etc/UTC
       - YARR_DB=/data/yarr.db
-      - YARR_ADDR=0.0.0.0
-      - YARR_PORT=7070
+      - YARR_ADDR=0.0.0.0:7070
       - YARR_AUTH=username:password
       - YARR_AUTHFILE=
       - YARR_BASE=
@@ -21,7 +20,7 @@ services:
       - YARR_KEYFILE=
       - YARR_LOGFILE=
     volumes:
-      - ./yarr/data/yarr.db:/data/yarr.db
+      - ./yarr/data:/data
     ports:
       - 7070:7070
     restart: unless-stopped

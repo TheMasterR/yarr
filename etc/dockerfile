@@ -10,8 +10,7 @@ COPY --from=build /src/_output/linux/yarr /usr/local/bin/yarr
 RUN mkdir -p /data
 
 ENV YARR_DB /data/yarr.db
-ENV YARR_ADDR 0.0.0.0
-ENV YARR_PORT 7070
+ENV YARR_ADDR 0.0.0.0:7070
 ENV YARR_AUTH "username:password"
 ENV YARR_AUTHFILE ""
 # Base URL for Yarr
@@ -21,6 +20,6 @@ ENV YARR_CERTFILE ""
 ENV YARR_KEYFILE ""
 ENV YARR_LOGFILE ""
 
-EXPOSE ${YARR_PORT}
+EXPOSE 7070
 
 ENTRYPOINT ["/usr/local/bin/yarr"]
