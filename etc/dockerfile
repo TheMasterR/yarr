@@ -7,6 +7,8 @@ RUN make build_linux
 FROM ubuntu:latest
 COPY --from=build /src/_output/linux/yarr /usr/local/bin/yarr
 
+RUN mkdir -p /data
+
 ENV YARR_DB /data/yarr.db
 ENV YARR_ADDR 0.0.0.0
 ENV YARR_PORT 7070
