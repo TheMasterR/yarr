@@ -7,7 +7,7 @@ RUN make build_linux
 FROM ubuntu:latest
 COPY --from=build /src/_output/linux/yarr /usr/local/bin/yarr
 
-RUN apt update && apt install apt install ca-certificates -y && update-ca-certificates && rm -rf /var/lib/apt/lists/*
+RUN apt update && apt install ca-certificates -y && update-ca-certificates && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /data
 
