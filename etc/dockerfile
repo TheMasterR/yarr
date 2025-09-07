@@ -1,27 +1,14 @@
-FROM golang:latest AS build
-
+FROM golang:alpine3.21 AS build
+RUN apk add build-base git
 WORKDIR /src
 COPY . .
-RUN make build_linux
+RUN --mount=type=cache,target=/root/.cache/go-build \
+    --mount=type=cache,target=/root/go/pkg \
+  make host
 
-FROM ubuntu:latest
-COPY --from=build /src/_output/linux/yarr /usr/local/bin/yarr
-
-RUN apt update && apt install ca-certificates -y && update-ca-certificates && rm -rf /var/lib/apt/lists/*
-
-RUN mkdir -p /data
-
-ENV YARR_DB /data/yarr.db
-ENV YARR_ADDR 0.0.0.0:7070
-ENV YARR_AUTH "username:password"
-ENV YARR_AUTHFILE ""
-# Base URL for Yarr
-ENV YARR_BASE ""
-# /data/authfile
-ENV YARR_CERTFILE ""
-ENV YARR_KEYFILE ""
-ENV YARR_LOGFILE ""
-
+FROM alpine:latest
+RUN apk add --no-cache ca-certificates && update-ca-certificates
+COPY --from=build /src/out/yarr /usr/local/bin/yarr
 EXPOSE 7070
-
 ENTRYPOINT ["/usr/local/bin/yarr"]
+CMD ["-addr", "0.0.0.0:7070", "-db", "/data/yarr.db"]

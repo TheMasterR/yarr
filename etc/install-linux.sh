@@ -1,13 +1,21 @@
 #!/bin/bash
 
+if [[ ! -d "$HOME/.local/share/applications" ]]; then
+  mkdir -p "$HOME/.local/share/applications"
+fi
+
 cat >"$HOME/.local/share/applications/yarr.desktop" <<END
 [Desktop Entry]
 Name=yarr
 Exec=$HOME/.local/bin/yarr -open
 Icon=yarr
 Type=Application
-Categories=Internet;
+Categories=Internet;Network;News;Feed;
 END
+
+if [[ ! -d "$HOME/.local/share/icons" ]]; then
+  mkdir -p "$HOME/.local/share/icons"
+fi
 
 cat >"$HOME/.local/share/icons/yarr.svg" <<END
 <?xml version="1.0" encoding="UTF-8"?>
